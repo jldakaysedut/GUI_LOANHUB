@@ -29,6 +29,14 @@ public boolean dublicateCheck(){
     dbConnector dbc = new dbConnector();
     
     try{
+        
+    String contactNumber = cn.getText();
+    if (!contactNumber.matches("^09\\d{9}$")) {
+        JOptionPane.showMessageDialog(null, "Invalid contact number! Must be 11 digits and start with '09'.");
+        cn.setText("");
+        return true;
+    }
+              
     String query = "SELECT * FROM tbl_user WHERE u_username = '" + un.getText() + "' OR u_email = '" + em.getText() + "' OR u_contact = '" + cn.getText() + "'";
     ResultSet resultSet = dbc.getData(query);
           
@@ -52,6 +60,8 @@ public boolean dublicateCheck(){
                     JOptionPane.showMessageDialog(null, "Contact is already used!"); 
                     cn.setText(""); 
                 }
+                
+             
                 
                 
                 return true;
@@ -134,16 +144,16 @@ public boolean dublicateCheck(){
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addGap(46, 46, 46)
                 .addComponent(jLabel9)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(145, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(110, 110, 110)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(107, 107, 107))
+                .addContainerGap(142, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 300, 430));

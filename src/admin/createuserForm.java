@@ -34,6 +34,17 @@ public class createuserForm extends javax.swing.JFrame {
     dbConnector dbc = new dbConnector();
     
     try{
+        
+        
+        String contactNumber = cn.getText();
+    if (!contactNumber.matches("^09\\d{9}$")) {
+        JOptionPane.showMessageDialog(null, "Invalid contact number! Must be 11 digits and start with '09'.");
+        cn.setText("");
+        return true;
+    }
+     
+        
+        
     String query = "SELECT * FROM tbl_user WHERE (u_username = '" + un.getText() + "' OR u_email = '" + em.getText() + "' OR u_contact = '" + cn.getText() + "') AND u_id = '"+uid.getText()+"' ";
     ResultSet resultSet = dbc.getData(query);
           
@@ -80,6 +91,17 @@ public class createuserForm extends javax.swing.JFrame {
     dbConnector dbc = new dbConnector();
     
     try{
+        
+        
+        String contactNumber = cn.getText();
+    if (!contactNumber.matches("^09\\d{9}$")) {
+        JOptionPane.showMessageDialog(null, "Invalid contact number! Must be 11 digits and start with '09'.");
+        cn.setText("");
+        return true;
+    }
+     
+        
+        
     String query = "SELECT * FROM tbl_user WHERE (u_username = '" + un.getText() + "' OR u_email = '" 
             + em.getText() + "' OR u_contact = '" + cn.getText() + "') AND u_id!='"+uid.getText()+"'   ";
     ResultSet resultSet = dbc.getData(query);
@@ -104,6 +126,8 @@ public class createuserForm extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Contact is already used!"); 
                     cn.setText(""); 
                 }
+                
+               
                 
                 
                 return true;
