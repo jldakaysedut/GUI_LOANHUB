@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 02, 2025 at 01:54 PM
+-- Generation Time: Mar 13, 2025 at 04:21 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,8 +32,9 @@ CREATE TABLE `tbl_user` (
   `u_fname` varchar(50) NOT NULL,
   `u_lname` varchar(50) NOT NULL,
   `u_email` varchar(50) NOT NULL,
+  `u_contact` varchar(50) NOT NULL,
   `u_username` varchar(50) NOT NULL,
-  `u_password` varchar(50) NOT NULL,
+  `u_password` varchar(150) NOT NULL,
   `u_type` varchar(50) NOT NULL,
   `u_status` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -42,11 +43,15 @@ CREATE TABLE `tbl_user` (
 -- Dumping data for table `tbl_user`
 --
 
-INSERT INTO `tbl_user` (`u_id`, `u_fname`, `u_lname`, `u_email`, `u_username`, `u_password`, `u_type`, `u_status`) VALUES
-(11, 'John Lhoyde', 'Dakay', 'jldakaysedut@gmail.com', 'jldakaysedut', '123456789', 'Admin', 'Active'),
-(12, 'Fanny', 'Almoria', 'fanny@gmail.com', 'fanny', '1234567890', 'User', 'PENDING'),
-(13, 'Mike', 'Bustamante', 'Mike@gmail.com', 'mike', '12345678900', 'User', 'Active'),
-(14, 'Donna', 'Dakay', 'donna@gmail.com', 'donna', '12345678', 'User', 'PENDING');
+INSERT INTO `tbl_user` (`u_id`, `u_fname`, `u_lname`, `u_email`, `u_contact`, `u_username`, `u_password`, `u_type`, `u_status`) VALUES
+(26, 'testtest', 'test', 'ttest', '09685744756', 'ttest', '73l8gRjwLftklgfdXT+MdiMEjJwGPVMsyVxe16iYpk8=', 'User', 'Active'),
+(27, 'te', 'te', 'te', '09586744634', 'te', '73l8gRjwLftklgfdXT+MdiMEjJwGPVMsyVxe16iYpk8=', 'User', 'Active'),
+(28, 'John Lhoyde', 'Dakay', 'jl@gmail.com', '09685744567', 'jldak', '73l8gRjwLftklgfdXT+MdiMEjJwGPVMsyVxe16iYpk8=', 'Admin', 'Active'),
+(29, 'test', 'test', 'test', '09865433212', 'testtests', '73l8gRjwLftklgfdXT+MdiMEjJwGPVMsyVxe16iYpk8=', 'Admin', 'Active'),
+(30, 'john', 'john', 'john', '09685744653', 'john', '73l8gRjwLftklgfdXT+MdiMEjJwGPVMsyVxe16iYpk8=', 'User', 'Active'),
+(31, 'john lhoyde', 'dakay', 'jldakaygmail', '09786755847', 'jldakay', '73l8gRjwLftklgfdXT+MdiMEjJwGPVMsyVxe16iYpk8=', 'Admin', 'Active'),
+(32, 'jl', 'jl', 'jl', '09786755874', 'jl', '73l8gRjwLftklgfdXT+MdiMEjJwGPVMsyVxe16iYpk8=', 'Admin', 'Active'),
+(35, 'mike', 'mike', 'mike', '09584755634', 'mike', '73l8gRjwLftklgfdXT+MdiMEjJwGPVMsyVxe16iYpk8=', 'User', 'Active');
 
 --
 -- Indexes for dumped tables
@@ -66,7 +71,7 @@ ALTER TABLE `tbl_user`
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `u_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `u_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
