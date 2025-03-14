@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 13, 2025 at 04:21 PM
+-- Generation Time: Mar 14, 2025 at 05:38 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,14 +44,14 @@ CREATE TABLE `tbl_user` (
 --
 
 INSERT INTO `tbl_user` (`u_id`, `u_fname`, `u_lname`, `u_email`, `u_contact`, `u_username`, `u_password`, `u_type`, `u_status`) VALUES
-(26, 'testtest', 'test', 'ttest', '09685744756', 'ttest', '73l8gRjwLftklgfdXT+MdiMEjJwGPVMsyVxe16iYpk8=', 'User', 'Active'),
-(27, 'te', 'te', 'te', '09586744634', 'te', '73l8gRjwLftklgfdXT+MdiMEjJwGPVMsyVxe16iYpk8=', 'User', 'Active'),
-(28, 'John Lhoyde', 'Dakay', 'jl@gmail.com', '09685744567', 'jldak', '73l8gRjwLftklgfdXT+MdiMEjJwGPVMsyVxe16iYpk8=', 'Admin', 'Active'),
-(29, 'test', 'test', 'test', '09865433212', 'testtests', '73l8gRjwLftklgfdXT+MdiMEjJwGPVMsyVxe16iYpk8=', 'Admin', 'Active'),
-(30, 'john', 'john', 'john', '09685744653', 'john', '73l8gRjwLftklgfdXT+MdiMEjJwGPVMsyVxe16iYpk8=', 'User', 'Active'),
-(31, 'john lhoyde', 'dakay', 'jldakaygmail', '09786755847', 'jldakay', '73l8gRjwLftklgfdXT+MdiMEjJwGPVMsyVxe16iYpk8=', 'Admin', 'Active'),
-(32, 'jl', 'jl', 'jl', '09786755874', 'jl', '73l8gRjwLftklgfdXT+MdiMEjJwGPVMsyVxe16iYpk8=', 'Admin', 'Active'),
-(35, 'mike', 'mike', 'mike', '09584755634', 'mike', '73l8gRjwLftklgfdXT+MdiMEjJwGPVMsyVxe16iYpk8=', 'User', 'Active');
+(26, 'testtest', 'test', 'ttest', '09685744756', 'ttest', 'FeKw08M4keuw8e9gnsQZQgwg4yDOlMZfvIwzEkSOsiU=', 'User', 'Active'),
+(27, 'te', 'te', 'te', '09586744634', 'te', 'FeKw08M4keuw8e9gnsQZQgwg4yDOlMZfvIwzEkSOsiU=', 'User', 'Active'),
+(28, 'John Lhoyde', 'Dakay', 'jl@gmail.com', '09685744567', 'jldak', 'FeKw08M4keuw8e9gnsQZQgwg4yDOlMZfvIwzEkSOsiU=', 'Admin', 'Active'),
+(29, 'test', 'test', 'test', '09865433212', 'testtests', 'FeKw08M4keuw8e9gnsQZQgwg4yDOlMZfvIwzEkSOsiU=', 'Admin', 'Active'),
+(30, 'john', 'john', 'john', '09685744653', 'john', 'FeKw08M4keuw8e9gnsQZQgwg4yDOlMZfvIwzEkSOsiU=', 'User', 'Active'),
+(31, 'john lhoyde', 'dakay', 'jldakaygmail', '09786755847', 'jldakay', 'FeKw08M4keuw8e9gnsQZQgwg4yDOlMZfvIwzEkSOsiU=', 'Admin', 'Active'),
+(32, 'jl', 'jl', 'jl', '09786755874', 'jl', 'FeKw08M4keuw8e9gnsQZQgwg4yDOlMZfvIwzEkSOsiU=', 'Admin', 'Active'),
+(35, 'mike', 'mike', 'mike', '09584755634', 'mike', 'FeKw08M4keuw8e9gnsQZQgwg4yDOlMZfvIwzEkSOsiU=', 'User', 'Active');
 
 --
 -- Indexes for dumped tables
