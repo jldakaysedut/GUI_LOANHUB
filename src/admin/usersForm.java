@@ -33,10 +33,10 @@ public class usersForm extends javax.swing.JFrame {
     
     
 public void displayData(){
-    
+        Session sess = Session.getInstance();
     try{
         dbConnector dbc = new dbConnector();
-        ResultSet rs = dbc.getData("Select u_id, u_fname, u_lname, u_username, u_type, u_status FROM tbl_user");
+        ResultSet rs = dbc.getData("Select u_id, u_fname, u_lname, u_username, u_type, u_status FROM tbl_user WHERE u_id != '"+sess.getUid()+"'");
         usersTable.setModel(DbUtils.resultSetToTableModel(rs));
         rs.close();
     }catch(SQLException ex){
