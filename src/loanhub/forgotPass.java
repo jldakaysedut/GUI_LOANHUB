@@ -5,6 +5,14 @@
  */
 package loanhub;
 
+
+import config.dbConnector;
+import config.passwordHasher;
+import java.security.NoSuchAlgorithmException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author jldak
@@ -29,7 +37,6 @@ public class forgotPass extends javax.swing.JFrame {
 
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        iddisplay = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -44,26 +51,31 @@ public class forgotPass extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         un = new javax.swing.JPasswordField();
-        f_newpass = new javax.swing.JPasswordField();
-        f_conpass = new javax.swing.JPasswordField();
+        fp_newpass = new javax.swing.JPasswordField();
+        fp_conpass = new javax.swing.JPasswordField();
         jLabel12 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBackground(new java.awt.Color(204, 51, 0));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 28)); // NOI18N
         jLabel1.setText("PASSWORD SECTION");
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 16, -1, -1));
-
-        iddisplay.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
-        jPanel3.add(iddisplay, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 58, -1, -1));
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
 
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dark red (2).jpg"))); // NOI18N
         jLabel13.setText("jLabel10");
         jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -90, 740, 180));
+
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 9, 720, -1));
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -80,6 +92,8 @@ public class forgotPass extends javax.swing.JFrame {
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/black backround 700.png"))); // NOI18N
         jLabel10.setText("jLabel9");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 420));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, 380));
 
         jPanel2.setBackground(new java.awt.Color(255, 153, 0));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -135,70 +149,87 @@ public class forgotPass extends javax.swing.JFrame {
 
         jPanel2.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 260, 90, 30));
         jPanel2.add(un, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 220, -1));
-        jPanel2.add(f_newpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 220, -1));
-        jPanel2.add(f_conpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 220, -1));
+        jPanel2.add(fp_newpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 220, -1));
+        jPanel2.add(fp_conpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 220, -1));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/red-and-orange-background.jpg"))); // NOI18N
         jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 390));
 
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, -1, 380));
+
         jPanel5.setBackground(new java.awt.Color(102, 0, 0));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(270, 270, 270)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 500));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
 
+        
+        
+        
+    loginForm lg = new loginForm();
+    lg.setVisible(true);
+    this.dispose();
         
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
 
-        // Declare confirmPass
+     
 
-        
-        
+    try {
+    dbConnector dbc = new dbConnector();
+
+     
+
+    String query = "SELECT * FROM tbl_user WHERE u_username = '" + un.getText() + "'";
+    ResultSet rs = dbc.getData(query);   
+
+    if (rs.next()) {
+        String olddbpass = rs.getString("u_password");
+
        
- 
-        
-        
+        if (!fp_newpass.getText().equals(fp_conpass.getText())) {
+            JOptionPane.showMessageDialog(null, "New password and confirm password do not match!");
+            return; // Stop execution if passwords do not match
+        }
+
+       
+        if (fp_newpass.getText().length() < 8 || fp_conpass.getText().length() < 8) {
+            JOptionPane.showMessageDialog(null, "Password should be a minimum of 8 characters!");
+            fp_newpass.setText("");
+            fp_conpass.setText("");
+            return; // Stop execution
+        }
+
+     
+        if (olddbpass.equals(passwordHasher.hashPassword(fp_newpass.getText()))) {
+            JOptionPane.showMessageDialog(null, "New password must be different from the old password!");
+            fp_newpass.setText("");
+            fp_conpass.setText("");
+            return; // Stop execution
+        }
+
+      
+        String npass = passwordHasher.hashPassword(fp_newpass.getText());
+        dbc.updateData("UPDATE tbl_user SET u_password = '" + npass + "' WHERE u_username = '" + un.getText() + "'");
+
+        JOptionPane.showMessageDialog(null, "Password successfully reset!");
+
+        loginForm lg = new loginForm();
+        lg.setVisible(true);
+        this.dispose();
+    } else {       
+        JOptionPane.showMessageDialog(null, "Username not found!");
+    }
+} catch (SQLException | NoSuchAlgorithmException ex) {
+    System.out.println("Error: " + ex);
+}
+
         
         
         
@@ -221,6 +252,14 @@ public class forgotPass extends javax.swing.JFrame {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel6MouseClicked
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+
+   
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
@@ -258,9 +297,8 @@ public class forgotPass extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPasswordField f_conpass;
-    private javax.swing.JPasswordField f_newpass;
-    private javax.swing.JLabel iddisplay;
+    private javax.swing.JPasswordField fp_conpass;
+    private javax.swing.JPasswordField fp_newpass;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
