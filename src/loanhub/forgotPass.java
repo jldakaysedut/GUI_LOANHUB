@@ -6,6 +6,7 @@
 package loanhub;
 
 
+import config.Session;
 import config.dbConnector;
 import config.passwordHasher;
 import java.security.NoSuchAlgorithmException;
@@ -38,21 +39,13 @@ public class forgotPass extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        un = new javax.swing.JPasswordField();
         fp_newpass = new javax.swing.JPasswordField();
         fp_conpass = new javax.swing.JPasswordField();
+        Back = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
 
@@ -73,158 +66,108 @@ public class forgotPass extends javax.swing.JFrame {
 
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dark red (2).jpg"))); // NOI18N
         jLabel13.setText("jLabel10");
-        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -90, 740, 180));
+        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -90, 610, 180));
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 9, 720, -1));
-
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/logo_loanhub2 (2).png"))); // NOI18N
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 200, -1));
-
-        jLabel2.setFont(new java.awt.Font("Viner Hand ITC", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 153, 0));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("By: Dakay");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, 110, 40));
-
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/black backround 700.png"))); // NOI18N
-        jLabel10.setText("jLabel9");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 420));
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, 380));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 9, 600, -1));
 
         jPanel2.setBackground(new java.awt.Color(255, 153, 0));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel3.setText("Enter Username");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, -1, -1));
-
         jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel4.setText("Enter New Password");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel5.setText("Confirm");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 200, -1, -1));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, -1, -1));
+        jPanel2.add(fp_newpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 60, 220, -1));
+        jPanel2.add(fp_conpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 220, -1));
 
-        jPanel4.setBackground(new java.awt.Color(255, 102, 0));
-        jPanel4.setLayout(null);
-
-        jLabel6.setBackground(new java.awt.Color(255, 153, 51));
-        jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Back");
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel6MouseClicked(evt);
+        Back.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+        Back.setText("Back");
+        Back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackActionPerformed(evt);
             }
         });
-        jPanel4.add(jLabel6);
-        jLabel6.setBounds(0, 0, 90, 30);
+        jPanel2.add(Back, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, 90, -1));
 
-        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 260, 90, 30));
-
-        jPanel6.setBackground(new java.awt.Color(255, 102, 0));
-        jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel6MouseClicked(evt);
+        jButton1.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+        jButton1.setText("Save");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
-        jPanel6.setLayout(null);
-
-        jLabel8.setBackground(new java.awt.Color(102, 255, 102));
-        jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("Save");
-        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel8MouseClicked(evt);
-            }
-        });
-        jPanel6.add(jLabel8);
-        jLabel8.setBounds(0, 0, 90, 30);
-
-        jPanel2.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 260, 90, 30));
-        jPanel2.add(un, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 220, -1));
-        jPanel2.add(fp_newpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 220, -1));
-        jPanel2.add(fp_conpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 220, -1));
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 180, 80, -1));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/red-and-orange-background.jpg"))); // NOI18N
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 390));
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 260));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, -1, 380));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 600, 260));
 
         jPanel5.setBackground(new java.awt.Color(102, 0, 0));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 500));
+        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 380));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
 
-        
-        
-        
+   
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowActivated
+
+    private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
+    
     loginForm lg = new loginForm();
     lg.setVisible(true);
     this.dispose();
-        
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel6MouseClicked
+                // TODO add your handling code here:
+    }//GEN-LAST:event_BackActionPerformed
 
-    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
-
-     
-
-    try {
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+try {
     dbConnector dbc = new dbConnector();
+    Session sess = Session.getInstance();
 
-     
-
-    String query = "SELECT * FROM tbl_user WHERE u_username = '" + un.getText() + "'";
+    String query = "SELECT u_password FROM tbl_user WHERE u_id = '" + sess.getUid() + "'";
     ResultSet rs = dbc.getData(query);   
 
     if (rs.next()) {
         String olddbpass = rs.getString("u_password");
 
-       
         if (!fp_newpass.getText().equals(fp_conpass.getText())) {
             JOptionPane.showMessageDialog(null, "New password and confirm password do not match!");
-            return; // Stop execution if passwords do not match
+            return;
         }
 
-       
         if (fp_newpass.getText().length() < 8 || fp_conpass.getText().length() < 8) {
             JOptionPane.showMessageDialog(null, "Password should be a minimum of 8 characters!");
             fp_newpass.setText("");
             fp_conpass.setText("");
-            return; // Stop execution
+            return;
         }
 
-     
         if (olddbpass.equals(passwordHasher.hashPassword(fp_newpass.getText()))) {
             JOptionPane.showMessageDialog(null, "New password must be different from the old password!");
             fp_newpass.setText("");
             fp_conpass.setText("");
-            return; // Stop execution
+            return;
         }
 
-      
         String npass = passwordHasher.hashPassword(fp_newpass.getText());
-        dbc.updateData("UPDATE tbl_user SET u_password = '" + npass + "' WHERE u_username = '" + un.getText() + "'");
+        dbc.updateData("UPDATE tbl_user SET u_password = '" + npass + "' WHERE u_id = '" + sess.getUid() + "'");
 
         JOptionPane.showMessageDialog(null, "Password successfully reset!");
 
         loginForm lg = new loginForm();
         lg.setVisible(true);
         this.dispose();
-    } else {       
-        JOptionPane.showMessageDialog(null, "Username not found!");
     }
 } catch (SQLException | NoSuchAlgorithmException ex) {
     System.out.println("Error: " + ex);
@@ -237,29 +180,8 @@ public class forgotPass extends javax.swing.JFrame {
         
         
         
-        
-        
-        
-        
-        
-        
-        
-      
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel8MouseClicked
-
-    private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPanel6MouseClicked
-
-    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-
-   
-
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_formWindowActivated
+                // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -297,25 +219,17 @@ public class forgotPass extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Back;
     private javax.swing.JPasswordField fp_conpass;
     private javax.swing.JPasswordField fp_newpass;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPasswordField un;
     // End of variables declaration//GEN-END:variables
 }

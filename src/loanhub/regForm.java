@@ -19,7 +19,7 @@ public class regForm extends javax.swing.JFrame {
     public regForm() {
         initComponents();
     }
-    
+public String destination = "";    
 public static String email, contact,usname;
 public boolean dublicateCheck() {
     dbConnector dbc = new dbConnector();
@@ -247,9 +247,15 @@ public boolean dublicateCheck() {
       try{
       String pass = passwordHasher.hashPassword(ps.getText());
               
-      if( dbc.insertData("INSERT INTO tbl_user(u_fname, u_lname, u_email, u_contact, u_username, u_password, u_type, u_status)"
-              + "VALUES('"+fn.getText()+"','"+ln.getText()+"','"+em.getText()+"','"+cn.getText()+"','"+un.getText()+"','"+pass+"','"+ut.getSelectedItem()+"','Pending')"))
-      {
+  
+
+        if (dbc.insertData("INSERT INTO tbl_user(u_fname, u_lname, u_email, u_contact, u_username, u_password, u_type, u_status, u_image) " +
+                           "VALUES ('" + fn.getText() + "', '" + ln.getText() + "', '" + em.getText() + "', '" + cn.getText() + "', '" + 
+                           un.getText() + "', '" + pass + "', '" + ut.getSelectedItem() + "', 'Pending','')")) {
+            
+      
+      
+      
         JOptionPane.showMessageDialog(null, "Inserted Successfully!");
         loginForm lg = new loginForm();
         lg.setVisible(true);

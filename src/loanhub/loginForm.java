@@ -103,11 +103,11 @@ public class loginForm extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         user = new javax.swing.JTextField();
-        pass = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        pass = new javax.swing.JPasswordField();
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -167,13 +167,6 @@ public class loginForm extends javax.swing.JFrame {
         });
         jPanel5.add(user, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 220, 240, 34));
 
-        pass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passActionPerformed(evt);
-            }
-        });
-        jPanel5.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 290, 240, 35));
-
         jButton2.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         jButton2.setText("Exit");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -213,6 +206,7 @@ public class loginForm extends javax.swing.JFrame {
             }
         });
         jPanel5.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 440, 240, -1));
+        jPanel5.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 300, 240, 30));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/red-and-orange-background.jpg"))); // NOI18N
         jPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, 450, 390));
@@ -231,41 +225,45 @@ public class loginForm extends javax.swing.JFrame {
  
     }//GEN-LAST:event_userActionPerformed
 
-    private void passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     
         
-           
-if(loginAcc(user.getText(),pass.getText())){
-    if(!status.equals("Active")){
-    JOptionPane.showMessageDialog(null,"In-Active Account, Contact the admin");   
-}else{      
-      
-     
-      if(type.equals("Admin")){    
-     JOptionPane.showMessageDialog(null,"Login Success"); 
-     admindashboard ads = new admindashboard();
-     ads.setVisible(true);
-     this.dispose();    
-     
-      }else if(type.equals("User")){
-      JOptionPane.showMessageDialog(null,"Login Success"); 
-     userDashboard usd = new userDashboard();
-     usd.setVisible(true);
-     this.dispose();    
-      }else{
-     JOptionPane.showMessageDialog(null,"No Account type found, Contact Admin");
-       
+if(loginAcc(user.getText(), pass.getText())) {
+    if(!status.equals("Active")) {
+        JOptionPane.showMessageDialog(null, "In-Active Account, Contact the admin");   
+    } else {      
+
+        try {
+            dbConnector dbc = new dbConnector();
+            Session sess = Session.getInstance();
+
+            // ✅ Insert login log with current timestamp
+            String logQuery = "INSERT INTO tbl_logs (u_id, action, date) VALUES ('" + sess.getUid() + "', 'Logged in', NOW())";
+            dbc.insertData(logQuery);
+        } catch(Exception ex) {
+            System.out.println("Log Insert Error: " + ex);
+        }
+
+        if(type.equals("Admin")) {    
+            JOptionPane.showMessageDialog(null, "Login Success"); 
+            admindashboard ads = new admindashboard();
+            ads.setVisible(true);
+            this.dispose();    
+
+        } else if(type.equals("User")) {
+            JOptionPane.showMessageDialog(null, "Login Success"); 
+            userDashboard usd = new userDashboard();
+            usd.setVisible(true);
+            this.dispose();    
+
+        } else {
+            JOptionPane.showMessageDialog(null, "No Account type found, Contact Admin");
+        }
     }
-      
-    }
- }else{
-     JOptionPane.showMessageDialog(null,"Invalid Account");
+} else {
+    JOptionPane.showMessageDialog(null, "Invalid Account");
 }  
-  
+
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -293,8 +291,8 @@ this.dispose();
 
 
 
-    forgotPass fp = new forgotPass();
-    fp.setVisible(true);
+    enterPhrase epa= new enterPhrase();
+    epa.setVisible(true);
     this.dispose();
 
 
@@ -359,7 +357,7 @@ this.dispose();
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JTextField pass;
+    private javax.swing.JPasswordField pass;
     private javax.swing.JTextField user;
     // End of variables declaration//GEN-END:variables
 }

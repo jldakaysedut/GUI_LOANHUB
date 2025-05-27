@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author jldak
+ *
  */
 public class dbConnector {
     
@@ -78,6 +78,37 @@ public class dbConnector {
         }
         
         
-        
-        
+  // Function to insert data and return generated ID (like p_id)
+public int insertDataAndReturnID(String sql) {
+    try {
+        PreparedStatement pst = connect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        pst.executeUpdate();
+        ResultSet rs = pst.getGeneratedKeys();
+        if (rs.next()) {
+            int generatedId = rs.getInt(1); // This is your auto-incremented ID
+            pst.close();
+            return generatedId;
+        }
+        pst.close();
+    } catch (SQLException ex) {
+        System.out.println("Insert with ID Error: " + ex.getMessage());
+    }
+    return -1; // return -1 if failed
+}
+      
+     public boolean updateDataapply(String sql, Object... params) {
+    try (PreparedStatement pst = connect.prepareStatement(sql)) {
+        for (int i = 0; i < params.length; i++) {
+            pst.setObject(i + 1, params[i]);
+        }
+        int rows = pst.executeUpdate();
+        return rows > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
+  
+
+
 }

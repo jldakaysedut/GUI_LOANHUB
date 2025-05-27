@@ -11,7 +11,10 @@ import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -31,7 +34,7 @@ public class usersForm extends javax.swing.JFrame {
     Color navcolor = new Color(0,51,51);
     Color hovercolor = new Color(255,204,153);
     
-    
+  
 public void displayData(){
         Session sess = Session.getInstance();
     try{
@@ -44,6 +47,7 @@ public void displayData(){
         
     }
 }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -55,6 +59,8 @@ public void displayData(){
 
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         p_add = new javax.swing.JPanel();
@@ -65,6 +71,10 @@ public void displayData(){
         acc_id = new javax.swing.JLabel();
         edit = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
+        print = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        delete = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -87,7 +97,19 @@ public void displayData(){
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 28)); // NOI18N
         jLabel1.setText("USER FORM");
         jLabel1.setToolTipText("");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 229, 40));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 229, 60));
+
+        jLabel13.setFont(new java.awt.Font("Times New Roman", 1, 17)); // NOI18N
+        jLabel13.setText("Search");
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, -1, 40));
+
+        jTextField1.setBackground(new java.awt.Color(204, 204, 204));
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
+        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 30, 200, -1));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dark red (2).jpg"))); // NOI18N
         jLabel12.setText("jLabel10");
@@ -158,17 +180,72 @@ public void displayData(){
         edit.add(jLabel7);
         jLabel7.setBounds(80, 0, 50, 24);
 
-        jPanel3.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 256, 190, 24));
+        jPanel3.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 190, 24));
+
+        print.setBackground(new java.awt.Color(51, 51, 51));
+        print.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                printMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                printMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                printMouseExited(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Print");
+
+        javax.swing.GroupLayout printLayout = new javax.swing.GroupLayout(print);
+        print.setLayout(printLayout);
+        printLayout.setHorizontalGroup(
+            printLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(printLayout.createSequentialGroup()
+                .addGap(80, 80, 80)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        printLayout.setVerticalGroup(
+            printLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel8)
+        );
+
+        jPanel3.add(print, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 190, 24));
+
+        delete.setBackground(new java.awt.Color(51, 51, 51));
+        delete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                deleteMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                deleteMouseExited(evt);
+            }
+        });
+        delete.setLayout(null);
+
+        jLabel11.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Delete");
+        delete.add(jLabel11);
+        jLabel11.setBounds(70, 0, 60, 24);
+
+        jPanel3.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 190, 24));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/black backround 700.png"))); // NOI18N
         jLabel9.setText("jLabel9");
-        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 440));
+        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 420));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 190, 420));
 
         jPanel1.setBackground(new java.awt.Color(255, 153, 51));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        usersTable.setBackground(new java.awt.Color(204, 204, 204));
         jScrollPane1.setViewportView(usersTable);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 26, 570, 345));
@@ -239,14 +316,24 @@ public void displayData(){
     }//GEN-LAST:event_p_addMouseExited
 
     private void p_addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_p_addMouseClicked
- createuserForm crf = new createuserForm();
+        createuserForm crf = new createuserForm();
         crf.setVisible(true);
-        this.dispose();        // TODO add your handling code here:
+        crf.remove.setEnabled(false);
+        crf.select.setEnabled(true);
+        this.dispose();  
+        
+        
+
+        
+        
+
+// TODO add your handling code here:
     }//GEN-LAST:event_p_addMouseClicked
 
     private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
 
-
+        
+      
       int rowIndex = usersTable.getSelectedRow();
       
       
@@ -272,9 +359,25 @@ public void displayData(){
           crf.ps.setText(""+rs.getString("u_password"));
           crf.ut.setSelectedItem(""+rs.getString("u_type"));
           crf.us.setSelectedItem(""+rs.getString("u_status"));
+          crf.image.setIcon(crf.ResizeImage(rs.getString("u_image"), null, crf.image));
+          crf.oldpath = rs.getString("u_image");
+          crf.path = rs.getString("u_image");
+          crf.destination = rs.getString("u_image");
+          
+          
+          crf.ps.setEnabled(false);
           crf.add.setEnabled(false);  
           crf.update.setEnabled(true);
-          crf.setVisible(true);        
+          crf.setVisible(true);
+          
+          if(rs.getString("u_image").isEmpty()){
+          crf.select.setEnabled(true);
+          crf.remove.setEnabled(false);
+          }else{
+          crf.select.setEnabled(false);
+          crf.remove.setEnabled(true);   
+          }
+          
           this.dispose();
          }
       }catch(SQLException ex){
@@ -300,6 +403,156 @@ public void displayData(){
 
         
     }//GEN-LAST:event_editMouseExited
+
+    private void printMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_printMouseClicked
+
+        
+         
+      int rowIndex = usersTable.getSelectedRow();
+      
+      
+      if(rowIndex < 0){
+          JOptionPane.showMessageDialog(null, "Please select an item!");
+      }else{
+                  
+       try{   
+          dbConnector dbc = new dbConnector();
+          TableModel tbl = usersTable.getModel(); 
+          ResultSet rs = dbc.getData("SELECT * FROM tbl_user WHERE u_id = '" + tbl.getValueAt(rowIndex, 0) + "'");
+
+         
+          if(rs.next()){  
+         
+              individualPrinting ipt = new individualPrinting();
+          ipt.uid.setText(""+rs.getInt("u_id"));
+          ipt.fn.setText(""+rs.getString("u_fname"));
+          ipt.ln.setText(""+rs.getString("u_lname"));
+          ipt.em.setText(""+rs.getString("u_email"));
+          ipt.cn.setText(""+rs.getString("u_contact"));
+          ipt.un.setText(""+rs.getString("u_username"));
+      
+          ipt.at.setText(""+rs.getString("u_type"));
+          ipt.st.setText(""+rs.getString("u_status"));
+          
+          ipt.image.setIcon(ipt.ResizeImage(rs.getString("u_image"), null, ipt.image));
+          ipt.setVisible(true);
+        
+          this.dispose();
+         }
+      }catch(SQLException ex){
+        System.out.println(""+ex);
+      }
+
+      }
+      
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_printMouseClicked
+
+    private void printMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_printMouseEntered
+      print.setBackground(hovercolor);   
+    }//GEN-LAST:event_printMouseEntered
+
+    private void printMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_printMouseExited
+      print.setBackground(navcolor); 
+    }//GEN-LAST:event_printMouseExited
+
+    private void deleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseClicked
+
+int rowIndex = usersTable.getSelectedRow();
+
+if (rowIndex < 0) {
+    JOptionPane.showMessageDialog(null, "Please select an item!");
+} else {
+    try {
+        dbConnector dbc = new dbConnector();
+        TableModel tbl = usersTable.getModel();
+        ResultSet rs = dbc.getData("SELECT * FROM tbl_user WHERE u_id = '" + tbl.getValueAt(rowIndex, 0) + "'");
+
+        if (rs.next()) {
+            createuserForm crf = new createuserForm();
+            
+            crf.uid.setText("" + rs.getInt("u_id"));
+            crf.fn.setText("" + rs.getString("u_fname"));
+            crf.ln.setText("" + rs.getString("u_lname"));
+            crf.em.setText("" + rs.getString("u_email"));
+            crf.cn.setText("" + rs.getString("u_contact"));
+            crf.un.setText("" + rs.getString("u_username"));
+            crf.ps.setText("" + rs.getString("u_password"));
+            crf.ut.setSelectedItem("" + rs.getString("u_type"));
+            crf.us.setSelectedItem("" + rs.getString("u_status"));
+            crf.image.setIcon(crf.ResizeImage(rs.getString("u_image"), null, crf.image));
+            crf.oldpath = rs.getString("u_image");
+            crf.path = rs.getString("u_image");
+            crf.destination = rs.getString("u_image");
+
+            // Disable the add and update buttons for viewing
+            crf.add.setEnabled(false);
+            crf.update.setEnabled(false);
+            crf.select.setEnabled(false);
+            crf.remove.setEnabled(false);
+
+            // Show the createuserForm
+            crf.setVisible(true);
+            
+            // Dispose of the current form only after opening the new one
+            this.dispose();
+        }
+    } catch (SQLException ex) {
+        System.out.println("" + ex);
+    }
+}
+
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+ 
+        
+
+
+
+
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteMouseClicked
+
+    private void deleteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseEntered
+delete.setBackground(hovercolor);           // TODO add your handling code here:
+    }//GEN-LAST:event_deleteMouseEntered
+
+    private void deleteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseExited
+    delete.setBackground(navcolor);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteMouseExited
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+
+        DefaultTableModel model = (DefaultTableModel) usersTable.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        usersTable.setRowSorter(sorter);
+
+        String searchText = jTextField1.getText();
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1KeyReleased
 
     /**
      * @param args the command line arguments
@@ -339,23 +592,29 @@ public void displayData(){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel acc_id;
+    private javax.swing.JPanel delete;
     private javax.swing.JPanel edit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel p_add;
+    private javax.swing.JPanel print;
     private javax.swing.JTable usersTable;
     // End of variables declaration//GEN-END:variables
 }

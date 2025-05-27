@@ -1,0 +1,1171 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package admin;
+
+import config.Session;
+import config.dbConnector;
+import java.awt.Color;
+import static java.awt.Color.black;
+import static java.awt.Color.gray;
+import static java.awt.Color.red;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import net.proteanit.sql.DbUtils;
+import user.userDashboard;
+
+/**
+ *
+ * @author jldak
+ */
+public class loanTypeForm extends javax.swing.JFrame {
+
+    /**
+     * Creates new form admindashboard
+     */
+    public loanTypeForm() {
+        initComponents();
+        displayData();
+    }
+    
+    
+    
+    
+    public String destination = "";
+    File selectedFile;
+    public String oldpath;
+    public String path;
+    
+    
+public int FileExistenceChecker(String path){
+        File file = new File(path);
+        String fileName = file.getName();
+        
+        Path filePath = Paths.get("src/planimages", fileName);
+        boolean fileExists = Files.exists(filePath);
+        
+        if (fileExists) {
+            return 1;
+        } else {
+            return 0;
+        }
+    
+    }
+
+
+
+public static int getHeightFromWidth(String imagePath, int desiredWidth) {
+        try {
+            // Read the image file
+            File imageFile = new File(imagePath);
+            BufferedImage image = ImageIO.read(imageFile);
+            
+            // Get the original width and height of the image
+            int originalWidth = image.getWidth();
+            int originalHeight = image.getHeight();
+            
+            // Calculate the new height based on the desired width and the aspect ratio
+            int newHeight = (int) ((double) desiredWidth / originalWidth * originalHeight);
+            
+            return newHeight;
+        } catch (IOException ex) {
+            System.out.println("No image found!");
+        }
+        
+        return -1;
+    }
+
+
+public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
+    ImageIcon MyImage = null;
+        if(ImagePath !=null){
+            MyImage = new ImageIcon(ImagePath);
+        }else{
+            MyImage = new ImageIcon(pic);
+        }
+        
+    int newHeight = getHeightFromWidth(ImagePath, label.getWidth());
+
+    Image img = MyImage.getImage();
+    Image newImg = img.getScaledInstance(label.getWidth(), newHeight, Image.SCALE_SMOOTH);
+    ImageIcon image = new ImageIcon(newImg);
+    return image;
+}
+
+
+
+
+    public void imageUpdater(String existingFilePath, String newFilePath){
+        File existingFile = new File(existingFilePath);
+        if (existingFile.exists()) {
+            String parentDirectory = existingFile.getParent();
+            File newFile = new File(newFilePath);
+            String newFileName = newFile.getName();
+            File updatedFile = new File(parentDirectory, newFileName);
+            existingFile.delete();
+            try {
+                Files.copy(newFile.toPath(), updatedFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("Image updated successfully.");
+            } catch (IOException e) {
+                System.out.println("Error occurred while updating the image: "+e);
+            }
+        } else {
+            try{
+                Files.copy(selectedFile.toPath(), new File(destination).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            }catch(IOException e){
+                System.out.println("Error on update!");
+            }
+        }
+   }
+    
+    
+    
+    
+    
+    
+    boolean checkadd = true;
+    
+    Color navcolor = new Color(0,51,51);
+    Color hovercolor = new Color(255,204,153);
+    
+    
+public void displayData(){
+        Session sess = Session.getInstance();
+    try{
+        dbConnector dbc = new dbConnector();
+        ResultSet rs = dbc.getData("Select p_id, p_name, p_status FROM tbl_plan WHERE p_id != '"+sess.getUid()+"'");
+        ptable.setModel(DbUtils.resultSetToTableModel(rs));
+        rs.close();
+    }catch(SQLException ex){
+        System.out.println("Error: "+ex.getMessage());
+        
+    }
+}
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        add = new javax.swing.JPanel();
+        addlabel = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        acc_id = new javax.swing.JLabel();
+        clear = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        print = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        delete = new javax.swing.JPanel();
+        delete1 = new javax.swing.JLabel();
+        update = new javax.swing.JPanel();
+        update1 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ptable = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        pid = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        prequirement = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        pinterest = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        pname = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        pstatus = new javax.swing.JComboBox<>();
+        jPanel5 = new javax.swing.JPanel();
+        image = new javax.swing.JLabel();
+        select = new javax.swing.JButton();
+        remove = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel2.setBackground(new java.awt.Color(204, 51, 0));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 28)); // NOI18N
+        jLabel1.setText("LOAN PLAN FORM");
+        jLabel1.setToolTipText("");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 270, 40));
+
+        jLabel17.setFont(new java.awt.Font("Times New Roman", 1, 17)); // NOI18N
+        jLabel17.setText("Search");
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, -1, 40));
+
+        jTextField1.setBackground(new java.awt.Color(204, 204, 204));
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
+        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 30, 200, -1));
+
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dark red (2).jpg"))); // NOI18N
+        jLabel12.setText("jLabel10");
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -80, 810, 180));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 800, 70));
+
+        jPanel3.setBackground(new java.awt.Color(0, 51, 51));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        add.setBackground(new java.awt.Color(51, 51, 51));
+        add.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                addMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                addMouseExited(evt);
+            }
+        });
+        add.setLayout(null);
+
+        addlabel.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
+        addlabel.setForeground(new java.awt.Color(255, 255, 255));
+        addlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        addlabel.setText("Add");
+        addlabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addlabelMouseClicked(evt);
+            }
+        });
+        add.add(addlabel);
+        addlabel.setBounds(70, 0, 60, 24);
+
+        jPanel3.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 190, 24));
+
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("LOAN");
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, -1, -1));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/USERS DATA (1).png"))); // NOI18N
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, 133));
+
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Current User:");
+        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(31, 380, -1, -1));
+
+        acc_id.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
+        acc_id.setForeground(new java.awt.Color(255, 255, 255));
+        acc_id.setText("ID");
+        jPanel3.add(acc_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(147, 380, -1, -1));
+
+        clear.setBackground(new java.awt.Color(51, 51, 51));
+        clear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                clearMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                clearMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                clearMouseExited(evt);
+            }
+        });
+        clear.setLayout(null);
+
+        jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Clear");
+        clear.add(jLabel7);
+        jLabel7.setBounds(70, 0, 60, 24);
+
+        jPanel3.add(clear, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 190, 24));
+
+        print.setBackground(new java.awt.Color(51, 51, 51));
+        print.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                printMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                printMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                printMouseExited(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Print");
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout printLayout = new javax.swing.GroupLayout(print);
+        print.setLayout(printLayout);
+        printLayout.setHorizontalGroup(
+            printLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(printLayout.createSequentialGroup()
+                .addGap(80, 80, 80)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        printLayout.setVerticalGroup(
+            printLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel8)
+        );
+
+        jPanel3.add(print, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 190, 24));
+
+        delete.setBackground(new java.awt.Color(51, 51, 51));
+        delete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                deleteMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                deleteMouseExited(evt);
+            }
+        });
+        delete.setLayout(null);
+
+        delete1.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
+        delete1.setForeground(new java.awt.Color(255, 255, 255));
+        delete1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        delete1.setText("Delete");
+        delete1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                delete1MouseClicked(evt);
+            }
+        });
+        delete.add(delete1);
+        delete1.setBounds(70, 0, 60, 24);
+
+        jPanel3.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 190, 24));
+
+        update.setBackground(new java.awt.Color(51, 51, 51));
+        update.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                updateMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                updateMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                updateMouseExited(evt);
+            }
+        });
+        update.setLayout(null);
+
+        update1.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
+        update1.setForeground(new java.awt.Color(255, 255, 255));
+        update1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        update1.setText("Update");
+        update1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                update1MouseClicked(evt);
+            }
+        });
+        update.add(update1);
+        update1.setBounds(70, 0, 60, 24);
+
+        jPanel3.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 190, 24));
+
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/black backround 700.png"))); // NOI18N
+        jLabel9.setText("jLabel9");
+        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 420));
+
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 190, 420));
+
+        jPanel1.setBackground(new java.awt.Color(255, 153, 51));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        ptable.setBackground(new java.awt.Color(204, 204, 204));
+        ptable.setForeground(new java.awt.Color(51, 51, 51));
+        ptable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ptableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(ptable);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 580, 150));
+
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel2.setText("Back");
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(532, 380, 60, 30));
+
+        jLabel11.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel11.setText("Plan ID");
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 190, -1, -1));
+
+        pid.setEnabled(false);
+        pid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pidActionPerformed(evt);
+            }
+        });
+        jPanel1.add(pid, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 190, 210, -1));
+
+        jLabel13.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel13.setText(" Name");
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 230, -1, 30));
+
+        prequirement.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                prequirementActionPerformed(evt);
+            }
+        });
+        jPanel1.add(prequirement, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 270, 210, -1));
+
+        jLabel14.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel14.setText("Requirements");
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 270, -1, 30));
+        jPanel1.add(pinterest, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 310, 210, -1));
+
+        jLabel15.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel15.setText("Interest");
+        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 310, -1, -1));
+
+        pname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pnameActionPerformed(evt);
+            }
+        });
+        jPanel1.add(pname, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 230, 210, -1));
+
+        jLabel16.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel16.setText(" status");
+        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 350, -1, -1));
+
+        pstatus.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        pstatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Available", "Not Available" }));
+        jPanel1.add(pstatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 350, 210, -1));
+
+        jPanel5.setLayout(null);
+
+        image.setBackground(new java.awt.Color(255, 153, 0));
+        image.setForeground(new java.awt.Color(255, 153, 0));
+        jPanel5.add(image);
+        image.setBounds(30, 20, 170, 110);
+
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 230, 140));
+
+        select.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+        select.setForeground(new java.awt.Color(255, 153, 0));
+        select.setText("Select");
+        select.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectActionPerformed(evt);
+            }
+        });
+        jPanel1.add(select, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 110, -1));
+
+        remove.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+        remove.setForeground(new java.awt.Color(255, 153, 0));
+        remove.setText("Remove");
+        remove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeActionPerformed(evt);
+            }
+        });
+        jPanel1.add(remove, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 350, 110, -1));
+
+        jPanel6.setBackground(new java.awt.Color(153, 51, 0));
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 600, 10));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/red-and-orange-background.jpg"))); // NOI18N
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 600, 400));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 600, 410));
+
+        jPanel4.setBackground(new java.awt.Color(102, 0, 0));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 820, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 510, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 820, 510));
+
+        pack();
+        setLocationRelativeTo(null);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+     
+        admindashboard ds = new admindashboard();
+        ds.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+
+  Session sess = Session.getInstance();
+  acc_id.setText(""+sess.getUid());
+
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowActivated
+
+    private void addMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseEntered
+
+      add.setBackground(hovercolor);
+       
+    }//GEN-LAST:event_addMouseEntered
+
+    private void addMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseExited
+
+      add.setBackground(navcolor);
+
+
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addMouseExited
+
+    private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
+ 
+if (checkadd) {
+    if (pname.getText().isEmpty() || prequirement.getText().isEmpty() || pinterest.getText().isEmpty() || image.getIcon() == null) {
+        JOptionPane.showMessageDialog(null, "All fields are required including Image!");
+    } else {
+        // ✅ VALIDATIONS START
+        String name = pname.getText().trim();
+        String requirement = prequirement.getText().trim();
+        String interestStr = pinterest.getText().trim();
+
+        // Length validation
+        if (name.length() > 50) {
+            JOptionPane.showMessageDialog(null, "Plan name must not exceed 50 characters.");
+            return;
+        }
+
+        if (requirement.length() > 255) {
+            JOptionPane.showMessageDialog(null, "Requirement must not exceed 255 characters.");
+            return;
+        }
+
+        // No special characters in name
+        if (!name.matches("[a-zA-Z ]+")) {
+            JOptionPane.showMessageDialog(null, "Plan name must only contain letters and spaces.");
+            return;
+        }
+
+        // ✅ New: No numbers allowed in plan name
+        if (name.matches(".*\\d.*")) {
+            JOptionPane.showMessageDialog(null, "Plan name must not contain numbers.");
+            return;
+        }
+
+        // Interest must be a valid positive number
+        try {
+            double interest = Double.parseDouble(interestStr);
+            if (interest < 0) {
+                JOptionPane.showMessageDialog(null, "Interest must be a positive number.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Interest must be a valid number.");
+            return;
+        }
+        // ✅ VALIDATIONS END
+
+        try {
+            dbConnector dbc = new dbConnector();
+
+            // ✅ Prepare image path
+
+            // ✅ Insert with image path
+            String insertQuery = "INSERT INTO tbl_plan(p_name, p_requirement, p_interest, p_status, p_image) VALUES('"
+                    + pname.getText() + "','" + prequirement.getText() + "','" + pinterest.getText() + "','" 
+                    + pstatus.getSelectedItem() + "','" + destination + "')";
+
+            int generatedId = dbc.insertDataAndReturnID(insertQuery);
+
+            if (generatedId != -1) {
+                // ✅ Log action
+                try {
+                    Session sess = Session.getInstance();
+                    String logQuery = "INSERT INTO tbl_logs (u_id, action, date) VALUES ('" 
+                            + sess.getUid() + "', 'Added loan type: ID " + generatedId + "', NOW())";
+                    dbc.insertData(logQuery);
+                } catch (Exception ex) {
+                    System.out.println("Log Insert Error: " + ex);
+                }
+
+                // ✅ Save image file
+                try {
+                    Files.copy(selectedFile.toPath(), new File(destination).toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    JOptionPane.showMessageDialog(null, "Plan added successfully!");
+                } catch (IOException ex) {
+                    System.out.println("Insert Image Error: " + ex);
+                }
+
+                // ✅ Refresh fields
+                pid.setText(String.valueOf(generatedId)); 
+                displayData();
+                checkadd = true;
+                addlabel.setForeground(black);
+                pname.setText("");
+                prequirement.setText("");
+                pinterest.setText("");
+                pstatus.setSelectedIndex(0);
+                image.setIcon(null); // clear image preview
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Error adding data.");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Unexpected error: " + e.getMessage());
+        }
+    }
+} else {
+    JOptionPane.showMessageDialog(null, "Clear the field first");
+}
+
+        
+
+    }//GEN-LAST:event_addMouseClicked
+
+    private void printMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_printMouseClicked
+ int rowIndex = ptable.getSelectedRow();
+
+if (rowIndex < 0) {
+    JOptionPane.showMessageDialog(null, "Please select an item!");
+} else {
+    try {
+        dbConnector dbc = new dbConnector();
+        TableModel tbl = ptable.getModel();
+        String selectedPlanId = tbl.getValueAt(rowIndex, 0).toString();
+
+        ResultSet rs = dbc.getData("SELECT * FROM tbl_plan WHERE p_id = '" + selectedPlanId + "'");
+
+        if (rs.next()) {
+            planPrinting pp = new planPrinting();
+
+            pp.pid.setText("" + rs.getInt("p_id"));
+            pp.name.setText(rs.getString("p_name"));
+            pp.requirement.setText(rs.getString("p_requirement"));
+            pp.interest.setText(rs.getString("p_interest"));
+            pp.status.setText(rs.getString("p_status"));
+
+            String imagePath = rs.getString("p_image");
+
+            if (imagePath != null && !imagePath.trim().isEmpty()) {
+                pp.image.setIcon(pp.ResizeImage(imagePath, null, pp.image));
+            } else {
+                pp.image.setText("No Image");
+               
+            }
+
+            pp.setVisible(true);
+            this.dispose();
+        }
+    } catch (SQLException ex) {
+        System.out.println("Database Error: " + ex);
+    }
+}
+
+        
+        
+      
+    }//GEN-LAST:event_printMouseClicked
+
+    private void printMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_printMouseEntered
+      print.setBackground(hovercolor);   
+    }//GEN-LAST:event_printMouseEntered
+
+    private void printMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_printMouseExited
+      print.setBackground(navcolor); 
+    }//GEN-LAST:event_printMouseExited
+
+    private void pidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pidActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pidActionPerformed
+
+    private void prequirementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prequirementActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_prequirementActionPerformed
+
+    private void selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectActionPerformed
+
+JFileChooser fileChooser = new JFileChooser();
+                int returnValue = fileChooser.showOpenDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        selectedFile = fileChooser.getSelectedFile();
+                        destination = "src/planimages/" + selectedFile.getName();
+                        path  = selectedFile.getAbsolutePath();
+                        
+                        
+                        if(FileExistenceChecker(path) == 1){
+                          JOptionPane.showMessageDialog(null, "File Already Exist, Rename or Choose another!");
+                            destination = "";
+                            path="";
+                        }else{
+                            image.setIcon(ResizeImage(path, null, image));
+                           
+                        }
+                    } catch (Exception ex) {
+                        System.out.println("File Error!");
+                    }
+                }
+
+      
+        // TODO add your handling code here:
+    }//GEN-LAST:event_selectActionPerformed
+
+    private void removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionPerformed
+image.setIcon(null);
+destination = ""; // 👈 Flag for removed image
+path = "";
+
+ 
+            
+       
+
+    }//GEN-LAST:event_removeActionPerformed
+
+    private void ptableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ptableMouseClicked
+
+
+    
+                                   
+    int rowIndex = ptable.getSelectedRow();
+
+    if (rowIndex < 0) {
+        JOptionPane.showMessageDialog(null, "Please select an item!");
+    } else {
+        try {
+            dbConnector dbc = new dbConnector();
+            TableModel tbl = ptable.getModel(); 
+            ResultSet rs = dbc.getData("SELECT * FROM tbl_plan WHERE p_id = '" + tbl.getValueAt(rowIndex, 0) + "'");
+
+            if (rs.next()) {
+                pid.setText("" + rs.getInt("p_id"));
+                pname.setText("" + rs.getString("p_name"));
+                prequirement.setText("" + rs.getString("p_requirement"));
+                pinterest.setText("" + rs.getString("p_interest"));
+                pstatus.setSelectedItem("" + rs.getString("p_status"));
+
+                oldpath = rs.getString("p_image"); // 👈 🔧 1: Store old image path
+
+                checkadd = false;
+
+                // ✅ Load and scale image properly
+                String imagePath = rs.getString("p_image");
+                if (imagePath != null && !imagePath.isEmpty()) {
+                    File imgFile = new File(imagePath);
+                    if (imgFile.exists()) {
+                        ImageIcon icon = new ImageIcon(imagePath);
+                        Image scaledImage = icon.getImage().getScaledInstance(image.getWidth(), image.getHeight(), Image.SCALE_SMOOTH);
+                        image.setIcon(new ImageIcon(scaledImage));
+                    } else {
+                        image.setIcon(null);
+                        JOptionPane.showMessageDialog(null, "Image file not found.");
+                    }
+                } else {
+                    image.setIcon(null); // No image
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("" + ex);
+        }
+    }
+
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ptableMouseClicked
+
+    private void clearMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearMouseExited
+        clear.setBackground(navcolor);
+
+    }//GEN-LAST:event_clearMouseExited
+
+    private void clearMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearMouseEntered
+        clear.setBackground(hovercolor);
+    }//GEN-LAST:event_clearMouseEntered
+
+    private void clearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearMouseClicked
+     checkadd = true;
+    addlabel.setForeground(black);
+    
+       pid.setText("");
+          pname.setText("");
+             prequirement.setText("");
+                pinterest.setText("");
+                   pstatus.setSelectedIndex(0);
+                   image.setIcon(null); 
+
+    }//GEN-LAST:event_clearMouseClicked
+
+    private void addlabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addlabelMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addlabelMouseClicked
+
+    private void update1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_update1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_update1MouseClicked
+
+    private void updateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateMouseClicked
+
+if (pname.getText().isEmpty() || prequirement.getText().isEmpty() || pinterest.getText().isEmpty()) {
+    JOptionPane.showMessageDialog(null, "All fields are required!");
+} else if (!pname.getText().matches("[a-zA-Z ]+")) {
+    JOptionPane.showMessageDialog(null, "Plan name must only contain letters and spaces.");
+} else if (pname.getText().matches(".*\\d.*")) {
+    JOptionPane.showMessageDialog(null, "Plan name must not contain numbers.");
+} else if (pname.getText().length() > 50) {
+    JOptionPane.showMessageDialog(null, "Plan name must not exceed 50 characters.");
+} else if (prequirement.getText().length() > 255) {
+    JOptionPane.showMessageDialog(null, "Requirement must not exceed 255 characters.");
+} else if (image.getIcon() == null && destination.isEmpty()) {
+    JOptionPane.showMessageDialog(null, "Image is required.");
+} else {
+    try {
+        double interest = Double.parseDouble(pinterest.getText());
+        if (interest < 0) {
+            JOptionPane.showMessageDialog(null, "Interest must be a positive number.");
+        } else {
+            dbConnector dbc = new dbConnector();
+
+            // Determine image path to save
+            String imagePathToSave;
+            boolean imageRemoved = false;
+
+            if (!destination.isEmpty()) {
+                // New image selected
+                imagePathToSave = destination;
+            } else if (oldpath != null && !oldpath.isEmpty()) {
+                // Keep existing image path
+                imagePathToSave = oldpath;
+            } else {
+                // Image removed (no new image and no old image)
+                imagePathToSave = ""; // Use empty string or default placeholder, NOT null
+                imageRemoved = true;
+            }
+
+            // Update query with image path always included
+            String sql = "UPDATE tbl_plan SET p_name = ?, p_requirement = ?, p_interest = ?, p_status = ?, p_image = ? WHERE p_id = ?";
+
+            boolean updated = dbc.updateDataapply(sql,
+                pname.getText(),
+                prequirement.getText(),
+                pinterest.getText(),
+                pstatus.getSelectedItem(),
+                imagePathToSave,
+                pid.getText()
+            );
+
+            if (updated) {
+                // Delete old image if removed or replaced by new one
+                if (imageRemoved || (!destination.isEmpty() && oldpath != null && !oldpath.equals(destination))) {
+                    if (oldpath != null && !oldpath.isEmpty()) {
+                        File oldFile = new File(oldpath);
+                        if (oldFile.exists()) {
+                            if (oldFile.delete()) {
+                                System.out.println("Old image deleted successfully.");
+                            } else {
+                                System.out.println("Failed to delete old image.");
+                            }
+                        }
+                    }
+                }
+
+                // Copy new image file if selected and different from old
+                if (!destination.isEmpty() && (oldpath == null || !oldpath.equals(destination))) {
+                    try {
+                        Files.copy(selectedFile.toPath(), new File(destination).toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    } catch (IOException ex) {
+                        System.out.println("Image Copy Error: " + ex);
+                    }
+                }
+
+                // Log the update
+                try {
+                    Session sess = Session.getInstance();
+                    String logQuery = "INSERT INTO tbl_logs (u_id, action, date) VALUES ('" +
+                                      sess.getUid() + "', 'Updated plan: ID " + pid.getText() + "', NOW())";
+                    dbc.insertData(logQuery);
+                } catch (Exception ex) {
+                    System.out.println("Log Insert Error: " + ex);
+                }
+
+                // Refresh or redirect
+                loanTypeForm ltf = new loanTypeForm();
+                ltf.setVisible(true);
+                this.dispose();
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Update failed. Please check your data.");
+            }
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Interest must be a valid number.");
+    }
+}
+
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_updateMouseClicked
+
+    private void updateMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateMouseEntered
+  update.setBackground(hovercolor);    
+        // TODO add your handling code here:
+    }//GEN-LAST:event_updateMouseEntered
+
+    private void updateMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateMouseExited
+        update.setBackground(navcolor);      // TODO add your handling code here:
+    }//GEN-LAST:event_updateMouseExited
+
+    private void delete1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_delete1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_delete1MouseClicked
+
+    private void deleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseClicked
+
+ 
+
+
+
+if (pid.getText().isEmpty()) {
+    JOptionPane.showMessageDialog(null, "Please select a loan type to delete.");
+} else {
+    int confirm = JOptionPane.showConfirmDialog(null, 
+        "Are you sure you want to delete Loan Type ID " + pid.getText() + "?", 
+        "Confirm Delete", 
+        JOptionPane.YES_NO_OPTION);
+    
+    if (confirm == JOptionPane.YES_OPTION) {
+        dbConnector dbc = new dbConnector();
+
+        try {
+            // Fetch the image path before deletion
+            String imagePathQuery = "SELECT p_image FROM tbl_plan WHERE p_id = '" + pid.getText() + "'";
+            ResultSet rs = dbc.getData(imagePathQuery);
+            String imagePath = null;
+            if (rs.next()) {
+                imagePath = rs.getString("p_image");
+            }
+
+            // Delete the loan type from database
+            dbc.updateData("DELETE FROM tbl_plan WHERE p_id = '" + pid.getText() + "'");
+
+            // Log the deletion
+            Session sess = Session.getInstance();
+            String logQuery = "INSERT INTO tbl_logs (u_id, action, date) VALUES ('" 
+                    + sess.getUid() + "', 'Deleted loan type: ID " + pid.getText() + "', NOW())";
+            dbc.insertData(logQuery);
+
+            // Delete the image file if it exists
+            if (imagePath != null && !imagePath.isEmpty()) {
+                File imageFile = new File(imagePath);
+                if (imageFile.exists()) {
+                    boolean deleted = imageFile.delete();
+                    if (deleted) {
+                        System.out.println("Image deleted successfully.");
+                    } else {
+                        System.out.println("Image deletion failed.");
+                    }
+                }
+            }
+
+            JOptionPane.showMessageDialog(null, "Loan type deleted successfully.");
+            displayData();
+
+            // Clear fields after delete
+            pid.setText("");
+            pname.setText("");
+            prequirement.setText("");
+            pinterest.setText("");
+            pstatus.setSelectedIndex(0);
+            image.setIcon(null); 
+            addlabel.setForeground(black);
+            checkadd = true;
+
+        } catch(Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error deleting loan type: " + ex.getMessage());
+        }
+    }
+}
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteMouseClicked
+
+    private void deleteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseEntered
+
+  delete.setBackground(hovercolor);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteMouseEntered
+
+    private void deleteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseExited
+ 
+       delete.setBackground(navcolor);       
+// TODO add your handling code here:
+    }//GEN-LAST:event_deleteMouseExited
+
+    private void pnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pnameActionPerformed
+
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel8MouseClicked
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+
+        DefaultTableModel model = (DefaultTableModel) ptable.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        ptable.setRowSorter(sorter);
+
+        String searchText = jTextField1.getText();
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1KeyReleased
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(loanTypeForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(loanTypeForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(loanTypeForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(loanTypeForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new loanTypeForm().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel acc_id;
+    private javax.swing.JPanel add;
+    private javax.swing.JLabel addlabel;
+    private javax.swing.JPanel clear;
+    private javax.swing.JPanel delete;
+    private javax.swing.JLabel delete1;
+    public javax.swing.JLabel image;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
+    public javax.swing.JTextField pid;
+    public javax.swing.JTextField pinterest;
+    public javax.swing.JTextField pname;
+    public javax.swing.JTextField prequirement;
+    private javax.swing.JPanel print;
+    public javax.swing.JComboBox<String> pstatus;
+    public javax.swing.JTable ptable;
+    public javax.swing.JButton remove;
+    public javax.swing.JButton select;
+    private javax.swing.JPanel update;
+    private javax.swing.JLabel update1;
+    // End of variables declaration//GEN-END:variables
+}
